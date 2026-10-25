@@ -1,4 +1,3 @@
-"""Data + evaluation logic. Pure functions, no I/O except fetch/snapshot helpers."""
 import json, os, time
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -8,11 +7,12 @@ import requests
 
 LON = ZoneInfo("Europe/London")
 BASE = os.getenv("ELEXON_BASE", "https://data.elexon.co.uk/bmrs/api/v1")
-SNAPSHOT = os.getenv("SNAPSHOT_PATH", os.path.join(os.path.dirname(__file__), "..", "..", "data", "snapshot.json"))
+SNAPSHOT = os.getenv(
+    "SNAPSHOT_PATH",
+    os.path.join(os.path.dirname(__file__), "..", "data", "snapshot.json")
+)
 DEFAULT_CUTOFF = "09:20"  # ASSUMPTION: D-1 London time (EPEX GB day-ahead closure). Configurable.
 
-
-# ---------- fetching ----------
 def _get(path, params, timeout=60, retries=3):
     last = None
     for i in range(retries):
@@ -92,8 +92,6 @@ def detect_resolution_minutes(fc):
     d = np.diff(st).astype("timedelta64[m]").astype(int)
     return int(pd.Series(d).mode().iloc[0])
 
-
-# ---------- selection ----------
 def cutoff_utc(delivery_date, hhmm=DEFAULT_CUTOFF):
     """Cutoff = D-1 at hh:mm Europe/London, returned in UTC."""
     h, m = map(int, hhmm.split(":"))
