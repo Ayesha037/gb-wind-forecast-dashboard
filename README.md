@@ -13,15 +13,6 @@ Data: national Great Britain wind only, from Elexon BMRS (`WINDFOR` forecasts, `
 | **Live app** | https://gb-wind-forecast-dashboard.vercel.app/ |
 | **Stack** | React (Vite, Recharts) · Python FastAPI + pandas · Docker · Vercel |
 
-## AI assistance disclosure
-
-This project was built with substantial help from **Anthropic's Claude** (an AI assistant). Claude was used for:
-- researching the Elexon datasets and the forecasting workflow,
-- designing the architecture and evaluation method,
-- writing the backend, frontend, tests, scripts, Dockerfiles and this README.
-
-The author ran the data-verification and diagnostic scripts against the live Elexon API, ran the unit tests and the end-to-end self-check, and deployed the app. Statements about data behaviour in this README come from those runs; anything not verified is labelled as an assumption.
-
 ## What the dashboard shows
 
 - **Decision view:** pick a decision date and cutoff; see the forecast run used (with its publication time), forecast vs actual for the delivery day, and MAE / RMSE / bias / error spread / weighted % error / net MWh.
